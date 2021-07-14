@@ -56,6 +56,7 @@ const WritePage = () => {
         {!!blockHash &&
           <a 
             target="_blank" 
+            rel="noreferrer"
             href={`https://ipfs.io/ipfs/${blockHash}`}>
                 published block
           </a>
