@@ -9,6 +9,8 @@ const IndexPage = () => {
     const message = 'Hello!';
     const signature = await provider.getSigner().signMessage(message);
     console.log(signature);
+
+    // send the signature and message to our own endpoint to test verification
     const response = await fetch('/api/verify-signature', {
       method: 'POST',
       body: JSON.stringify({ signature, message }),
