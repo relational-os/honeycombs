@@ -8,12 +8,14 @@ interface ButtonView {
 
 const Button = (view: ButtonView) => {
   return (
-    <div className="button">
+    <button>
       <style jsx>{`
-        .button {
+        button {
+          background: linear-gradient(180deg, #4D9AFF 0%, #006EFF 100%), #006EFF;
+          border-radius: 36px;
         }
       `}</style>
-    </div>
+    </button>
   );
 };
 
