@@ -30,6 +30,12 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 				p {
 					margin-bottom: 10px;
 				}
+
+				ul {
+					margin: 0;
+					padding: 0;
+					list-style: none;
+				}
 			`}</style>
 		</main>
 	);
