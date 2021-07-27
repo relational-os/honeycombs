@@ -39,7 +39,15 @@ const Block = (view: BlockView) => {
 
 			<div className="block-context">{view.block.context}</div>
 
-			<pre>{JSON.stringify(view, null, 2)}</pre>
+			{view.block.type == "text" && (
+				<p className="block-text">
+					{view.block.content} <pre>{JSON.stringify(view, null, 2)}</pre>
+				</p>
+			)}
+
+			{view.block.type == "image" && (
+				<img src={view.block.content} className="block-image" />
+			)}
 
 			<TogglePostInclude block={view.block}></TogglePostInclude>
 
@@ -78,6 +86,10 @@ const Block = (view: BlockView) => {
 					padding: 1rem;
 					font-style: italic;
 					color: rgba(0, 0, 0, 0.3);
+				}
+
+				.block-image {
+					max-width: 100%;
 				}
 			`}</style>
 		</div>
