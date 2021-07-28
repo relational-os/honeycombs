@@ -41,5 +41,4 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 	);
 };
 
-
 export default MainLayout;
