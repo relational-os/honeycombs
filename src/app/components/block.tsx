@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import TimeAgo from "timeago-react";
 
 import EditBlock from "./editBlock";
@@ -17,16 +17,10 @@ export type BlockType = {
 export interface BlockView {
 	block: BlockType;
 	collapsed: boolean;
-	editing?: boolean;
+	editing: boolean;
 }
 
 const Block = (view: BlockView) => {
-	const [editing, setEditing] = useState(false);
-	view.editing == editing;
-	const onClick = () => setEditing(true);
-
-	console.log("editing", view.editing);
-
 	return (
 		<div className="block">
 			<div className="block-header">
@@ -44,11 +38,7 @@ const Block = (view: BlockView) => {
 				<div className="spacer"></div>
 
 				<div className="header-controls">
-					{!view.editing && (
-						<button className="edit-button" onClick={onClick}>
-							edit
-						</button>
-					)}
+					{!view.editing && <button className="edit-button">edit</button>}
 				</div>
 			</div>
 
