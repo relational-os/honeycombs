@@ -4,23 +4,19 @@ import Block from "@app/components/block";
 
 import blocks from "@data/blocks.json";
 
-import {v4 as uuidv4} from 'uuid';
-
 const IndexPage = () => {
-	return (
-		<div className="index">
-			{blocks.data.map((block) => {
-        let tempID = uuidv4();
-        console.log('tempID', tempID)
-				return <Block key={tempID} block={block} collapsed={false} editing={false}></Block>;
-			})}
+  return (
+    <div className="index">
+      {blocks.data.map((block, index) => {
+        return <Block key={`block_${index}`} block={block}></Block>;
+      })}
 
-			<style jsx>{`
+      <style jsx>{`
 				.index {
 				}
 			`}</style>
-		</div>
-	);
+    </div>
+  );
 };
 
 export default IndexPage;
