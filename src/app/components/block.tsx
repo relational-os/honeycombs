@@ -31,7 +31,7 @@ const Block = (view: BlockView) => {
 				<div className="header-metadata">
 					<div>{view.block.creator}</div>
 					<div>
-						posted <TimeAgo datetime={view.block.datetime} />
+						posted <TimeAgo datetime={view.block.datetime ? view.block.datetime : ""} />
 					</div>
 				</div>
 
