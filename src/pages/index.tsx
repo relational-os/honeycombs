@@ -9,8 +9,15 @@ const IndexPage = () => {
     <div className="index">
       <h1>test</h1>
 
-      {blocks.data.map((block) => {
-        return <Block block={block} collapsed={false} editing={false}></Block>;
+      {blocks.data.map((block, i) => {
+        return (
+          <Block
+            key={i}
+            block={block}
+            collapsed={false}
+            editing={false}
+          ></Block>
+        );
       })}
 
       <style jsx>{`
