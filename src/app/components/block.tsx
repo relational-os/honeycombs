@@ -25,7 +25,6 @@ export interface editBlockView extends BlockView {
 }
 
 const Block = (view: BlockView) => {
-	// this needs to go UP UP UP
 	const [editing, setEditing] = useState(false);
 
 	const { account } = useWallet();
