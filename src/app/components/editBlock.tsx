@@ -1,14 +1,15 @@
 import React from "react";
 
-import { BlockView } from "./block";
+import { editBlockView } from "./block";
 
-const EditBlock = (view: BlockView) => {
+const EditBlock = (props: editBlockView) => {
+  const {block, handleEditSaveClick, handleEditCancelClick} = props;
 	return (
 		<div>
-			<textarea className="context">{view.block.context}</textarea>
-			<textarea className="content">{view.block.content}</textarea>
-			<button>Save</button>
-			<button>Cancel</button>
+			<textarea className="context">{block.context}</textarea>
+			<textarea className="content">{block.content}</textarea>
+			<button onClick={handleEditSaveClick}>Save</button>
+			<button onClick={handleEditCancelClick}>Cancel</button>
 
 			<style jsx>{`
 				textarea {

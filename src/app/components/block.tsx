@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import TimeAgo from "timeago-react";
+import { useWallet } from "@gimmixfactory/use-wallet";
 
 import EditBlock from "./editBlock";
 import TogglePostInclude from "./togglePostInclude";
@@ -16,11 +17,24 @@ export type BlockType = {
 
 export interface BlockView {
 	block: BlockType;
-	collapsed: boolean;
-	editing: boolean;
+}
+
+export interface editBlockView extends BlockView {
+	handleEditSaveClick: () => void;
+	handleEditCancelClick: () => void;
 }
 
 const Block = (view: BlockView) => {
+	// this needs to go UP UP UP
+	const [editing, setEditing] = useState(false);
+
+	const { account } = useWallet();
+
+	const toggleEditing = () => setEditing(!editing);
+
+	const handleEditSaveClick = () => toggleEditing()
+	const handleEditCancelClick = () => toggleEditing()
+
 	return (
 		<div className="block">
 			<div className="block-header">
@@ -29,7 +43,8 @@ const Block = (view: BlockView) => {
 				</div>
 				<Avatar />
 				<div className="header-metadata">
-					<div>{view.block.creator}</div>
+					{/* <div>{view.block.creator}</div> */}
+					<div>{account}</div>
 					<div>
 						posted <TimeAgo datetime={view.block.datetime ? view.block.datetime : ""} />
 					</div>
@@ -38,12 +53,12 @@ const Block = (view: BlockView) => {
 				<div className="spacer"></div>
 
 				<div className="header-controls">
-					{!view.editing && <button className="edit-button">edit</button>}
+					{!editing && <button className="edit-button" onClick={toggleEditing}>edit</button>}
 				</div>
 			</div>
 
-			{view.editing ? (
-				<EditBlock {...view}></EditBlock>
+			{editing ? (
+				<EditBlock {...view} handleEditSaveClick={handleEditSaveClick}handleEditCancelClick={handleEditCancelClick}></EditBlock>
 			) : (
 				<div className="block-body">
 					<div className="block-context">{view.block.context}</div>
