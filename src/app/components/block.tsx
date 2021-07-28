@@ -3,6 +3,7 @@ import TimeAgo from "timeago-react";
 import { useWallet } from "@gimmixfactory/use-wallet";
 
 import EditBlock from "./editBlock";
+import EditHistory from "./editHistory";
 import TogglePostInclude from "./togglePostInclude";
 import Avatar from "./avatar";
 
@@ -27,13 +28,15 @@ export interface editBlockView extends BlockView {
 const Block = (view: BlockView) => {
 	// this needs to go UP UP UP
 	const [editing, setEditing] = useState(false);
+	const [collapsed, setCollapsed] = useState(false);
 
 	const { account } = useWallet();
 
 	const toggleEditing = () => setEditing(!editing);
+	const toggleCollapsed = () => setCollapsed(!collapsed);
 
-	const handleEditSaveClick = () => toggleEditing()
-	const handleEditCancelClick = () => toggleEditing()
+	const handleEditSaveClick = () => toggleEditing();
+	const handleEditCancelClick = () => toggleEditing();
 
 	return (
 		<div className="block">
@@ -46,19 +49,30 @@ const Block = (view: BlockView) => {
 					{/* <div>{view.block.creator}</div> */}
 					<div>{account}</div>
 					<div>
-						posted <TimeAgo datetime={view.block.datetime ? view.block.datetime : ""} />
+						posted{" "}
+						<TimeAgo
+							datetime={view.block.datetime ? view.block.datetime : ""}
+						/>
 					</div>
 				</div>
 
 				<div className="spacer"></div>
 
 				<div className="header-controls">
-					{!editing && <button className="edit-button" onClick={toggleEditing}>edit</button>}
+					{!editing && (
+						<button className="edit-button" onClick={toggleEditing}>
+							edit
+						</button>
+					)}
 				</div>
 			</div>
 
 			{editing ? (
-				<EditBlock {...view} handleEditSaveClick={handleEditSaveClick}handleEditCancelClick={handleEditCancelClick}></EditBlock>
+				<EditBlock
+					{...view}
+					handleEditSaveClick={handleEditSaveClick}
+					handleEditCancelClick={handleEditCancelClick}
+				></EditBlock>
 			) : (
 				<div className="block-body">
 					<div className="block-context">{view.block.context}</div>
@@ -74,6 +88,19 @@ const Block = (view: BlockView) => {
 						<img src={view.block.content} className="block-image" />
 					)}
 				</div>
+			)}
+
+			{!collapsed ? (
+				<button className="history-button" onClick={toggleCollapsed}>
+					&#8614; history
+				</button>
+			) : (
+				<>
+					<button className="history-button" onClick={toggleCollapsed}>
+						&#8615; history
+					</button>
+					<EditHistory {...view}></EditHistory>
+				</>
 			)}
 
 			<style jsx>{`
@@ -118,6 +145,17 @@ const Block = (view: BlockView) => {
 				}
 
 				.edit-button {
+					padding: 0;
+					outline: 0;
+					border: 0;
+					background: transparent;
+					font-size: 1rem;
+					color: #006eff;
+					cursor: pointer;
+				}
+
+				.history-button {
+					padding: 0;
 					outline: 0;
 					border: 0;
 					background: transparent;

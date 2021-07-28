@@ -3,7 +3,7 @@ import React from "react";
 interface EditHistoryView {}
 
 const EditHistory = (view: EditHistoryView) => {
-  return <div></div>;
+	return <div>History! ||||</div>;
 };
 
 export default EditHistory;
