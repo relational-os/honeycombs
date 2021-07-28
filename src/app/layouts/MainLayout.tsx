@@ -36,6 +36,17 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 					padding: 0;
 					list-style: none;
 				}
+
+				input,
+				textarea {
+					font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+						Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+						"Segoe UI Symbol";
+					margin: 0;
+					padding: 0.25rem 0.5rem;
+					font-size: 16px;
+					line-height: 1.5;
+				}
 			`}</style>
 		</main>
 	);

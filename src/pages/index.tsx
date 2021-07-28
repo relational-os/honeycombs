@@ -5,21 +5,18 @@ import Block from "@app/components/block";
 import blocks from "@data/blocks.json";
 
 const IndexPage = () => {
-  return (
-    <div className="index">
-      <h1>test</h1>
+	return (
+		<div className="index">
+			{blocks.data.map((block) => {
+				return <Block block={block} collapsed={false} editing={false}></Block>;
+			})}
 
-      {blocks.data.map((block) => {
-        return <Block block={block} collapsed={false} editing={false}></Block>;
-      })}
-
-      <style jsx>{`
-        .index {
-          padding: 20px;
-        }
-      `}</style>
-    </div>
-  );
+			<style jsx>{`
+				.index {
+				}
+			`}</style>
+		</div>
+	);
 };
 
 export default IndexPage;
