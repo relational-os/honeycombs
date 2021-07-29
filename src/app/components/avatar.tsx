@@ -6,7 +6,7 @@ const Avatar = () => {
 			<img src="https://tr.rbxcdn.com/e68da1ef7db4f144f4ab97a71db7854f/420/420/Decal/Png" />
 			<style jsx>{`
 				.avatar {
-					width: 48px;
+					min-width: 48px;
 					height: 48px;
 					border-radius: 100%;
 					overflow: hidden;

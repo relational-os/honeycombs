@@ -48,6 +48,12 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 					font-size: 16px;
 					line-height: 1.5;
 				}
+
+				@media screen and (max-width: 768px) {
+					main {
+						padding: 1.5rem;
+					}
+				}
 			`}</style>
 		</main>
 	);
