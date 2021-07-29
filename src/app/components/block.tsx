@@ -105,6 +105,7 @@ const Block = (view: BlockView) => {
 
 			<style jsx>{`
 				.block {
+					position: relative;
 					padding-bottom: 1rem;
 					border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 				}
