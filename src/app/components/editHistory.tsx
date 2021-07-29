@@ -23,7 +23,8 @@ const EditHistory = (view: EditHistoryView) => {
 						<div className="event-header">
 							<Link href="/account">
 								<a className="name">jimmithy.eth</a>
-							</Link>{" "}
+							</Link>
+							<span className="event-title">edited</span>
 							<span className="timeago">2 days ago</span>
 						</div>
 
@@ -35,6 +36,28 @@ const EditHistory = (view: EditHistoryView) => {
 							erat. Fusce libero diam, egestas non feugiat ut, volutpat ac
 							metus. Curabitur augue neque, condimentum in justo eget, dictum
 							vulputate nibh. Nunc tempor ornare tristique. Cras tell
+						</div>
+					</div>
+				</div>
+
+				<div className="event">
+					<div className="left-guts">
+						<div className="avatar">
+							<img
+								src="https://tr.rbxcdn.com/e68da1ef7db4f144f4ab97a71db7854f/420/420/Decal/Png"
+								className="temp-small-avatar"
+							/>
+						</div>
+						<div className="line"></div>
+					</div>
+
+					<div className="right-guts">
+						<div className="event-header">
+							<Link href="/account">
+								<a className="name">0x0456F</a>
+							</Link>
+							<span className="event-title">Created</span>
+							<span className="timeago">5 days ago</span>
 						</div>
 					</div>
 				</div>
@@ -58,43 +81,48 @@ const EditHistory = (view: EditHistoryView) => {
 					flex-basis: 25px;
 				}
 
-				.avatar {
+				.left-guts .avatar {
 					width: 100%;
 					height: 25px;
 				}
 
-				.temp-small-avatar {
+				.left-guts .avatar .temp-small-avatar {
 					width: 25px;
 					height: 25px;
 					border-radius: 100%;
 				}
 
-				.line {
+				.left-guts .line {
 					display: flex;
 					width: 2px;
 					margin: 0 auto;
 					flex-grow: 1;
-					background: pink;
+					background: #eee;
 				}
 
-				.event .event-header {
+				.right-guts .event-header {
 					display: flex;
 					flex-direction: row;
 					justify-content: left;
 					align-items: center;
 				}
-				.event .event-header .name {
+				.right-guts .event-header .name {
 					color: rgba(0, 0, 0, 1);
 					text-decoration: none;
 				}
-				.event .event-header .timeago {
+				.right-guts .event-header .timeago {
 					margin-left: 0.5rem;
 					font-size: 0.9rem;
 					color: rgba(0, 0, 0, 0.3);
 				}
+				.right-guts .event-header .event-title {
+					margin-left: 0.5rem;
+					font-size: 0.9rem;
+					font-weight: bold;
+				}
 
-				.event .event-content {
-					padding: 0.2rem 0;
+				.right-guts .event-content {
+					padding: 0.3rem 0 1.25rem;
 				}
 			`}</style>
 		</div>
