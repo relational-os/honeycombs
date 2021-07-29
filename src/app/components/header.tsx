@@ -118,6 +118,7 @@ const Header = () => {
 					border: 0;
 					outline: 0;
 					cursor: pointer;
+					font-size: 18px;
 				}
 
 				button.disconnect {

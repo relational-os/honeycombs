@@ -155,6 +155,7 @@ const Block = (view: BlockView) => {
 				}
 
 				.history-button {
+					margin-top: 0.5rem;
 					padding: 0;
 					outline: 0;
 					border: 0;

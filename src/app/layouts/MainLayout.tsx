@@ -17,6 +17,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 					padding: 0;
 					font-size: 16px;
 					line-height: 1.6;
+					color: #666;
 				}
 
 				main {
