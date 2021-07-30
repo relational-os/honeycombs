@@ -4,12 +4,14 @@ import MainLayout from "@app/layouts/MainLayout";
 import Header from "@app/components/header";
 
 function App({ Component, pageProps }: AppProps) {
-  return (
-    <MainLayout>
-      <Header></Header>
-      <Component {...pageProps} />
-    </MainLayout>
-  );
+	return (
+		<>
+			<Header></Header>
+			<MainLayout>
+				<Component {...pageProps} />
+			</MainLayout>
+		</>
+	);
 }
 
 export default App;

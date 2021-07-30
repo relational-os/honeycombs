@@ -2,20 +2,21 @@ import React from "react";
 
 import Block from "@app/components/block";
 
-import blocks from "@data/blocks.json";
+import { useBlockStore } from "@app/features/state";
 
 const IndexPage = () => {
+  const blocks = useBlockStore((state) => state.blocks);
+
+  console.log("updated");
+
   return (
     <div className="index">
-      <h1>test</h1>
-
-      {blocks.data.map((block) => {
-        return <Block block={block} collapsed={false} editing={false}></Block>;
+      {blocks.map((block, index) => {
+        return <Block key={`block_${index}`} {...block}></Block>;
       })}
 
       <style jsx>{`
         .index {
-          padding: 20px;
         }
       `}</style>
     </div>

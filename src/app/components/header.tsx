@@ -1,37 +1,67 @@
 import React from "react";
-import { useWallet } from "@gimmixfactory/use-wallet";
 import Link from "next/link";
+import ConnectWalletButton from "./connectWalletButton";
 
 const Header = () => {
-  const { account, connect, disconnect } = useWallet();
-  console.log(account);
-  return (
-    <header>
-      <Link href="/">
-        <a>
-          <h1>Honeycombs</h1>
-        </a>
-      </Link>
-      <Link href="/write">
-        <a>Write</a>
-      </Link>
-      {account == undefined ? (
-        <button onClick={() => connect()}>Connect Wallet</button>
-      ) : (
-        <button onClick={() => disconnect()}>Disconnect Wallet</button>
-      )}
+	return (
+		<header>
+			<nav>
+				<ul>
+					<li>
+						<Link href="/">
+							<a>Home</a>
+						</Link>
+					</li>
+					<li>
+						<Link href="/write">
+							<a>Write</a>
+						</Link>
+					</li>
+				</ul>
+			</nav>
 
-      <style jsx>{`
-        header {
-          padding: 20px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-        }
-      `}</style>
-    </header>
-  );
+			<ConnectWalletButton></ConnectWalletButton>
+
+			<style jsx>{`
+				header {
+					position: relative;
+					padding: 20px;
+				}
+
+				nav {
+					position: fixed;
+					top: 1rem;
+					left: 1rem;
+				}
+
+				nav ul a {
+					color: #000;
+					font-size: 1.2rem;
+					text-decoration: none;
+					border-bottom: 1px solid none;
+				}
+
+				nav ul a:hover {
+					border-bottom: 1px solid pink;
+				}
+
+				@media screen and (max-width: 768px) {
+					nav,
+					.authentication {
+						position: absolute;
+					}
+
+					nav ul {
+						display: flex;
+					}
+
+					nav ul li {
+						margin-right: 1rem;
+					}
+				}
+			`}</style>
+		</header>
+	);
 };
 
 export default Header;

@@ -1,8 +1,8 @@
+import { OSBlock } from "@relational-os/block-bridge";
 import React, { useState } from "react";
-import { BlockType } from "./block";
 
 interface TogglePostIncludeView {
-  block: BlockType;
+  block: OSBlock;
   checked?: boolean;
 }
 
