@@ -1,23 +1,23 @@
-import { useWallet } from "@gimmixfactory/use-wallet";
-import React from "react";
+import { useWallet } from '@gimmixfactory/use-wallet';
+import React from 'react';
 
 const IndexPage = () => {
   const { account, provider } = useWallet();
 
   const signMessage = async () => {
-    if (!provider) throw new Error("not logged in!");
-    const message = "Hello!";
+    if (!provider) throw new Error('not logged in!');
+    const message = 'Hello!';
     const signature = await provider.getSigner().signMessage(message);
     console.log(signature);
 
     // send the signature and message to our own endpoint to test verification
-    const response = await fetch("/api/verify-signature", {
-      method: "POST",
+    const response = await fetch('/api/verify-signature', {
+      method: 'POST',
       body: JSON.stringify({ signature, message }),
       headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json());
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json());
     console.log(response);
   };
 
@@ -26,7 +26,7 @@ const IndexPage = () => {
       {account ? (
         <button onClick={signMessage}>Sign Message</button>
       ) : (
-        "Not logged in"
+        'Not logged in'
       )}
       <style jsx>{`
         .index {

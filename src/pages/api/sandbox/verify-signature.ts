@@ -1,5 +1,5 @@
-import { verifyMessage } from "ethers/lib/utils";
-import { NextApiHandler } from "next";
+import { verifyMessage } from 'ethers/lib/utils';
+import { NextApiHandler } from 'next';
 
 const api: NextApiHandler = async (req, res) => {
   // Insert API endpoint logic here
