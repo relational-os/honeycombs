@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@gimmixfactory/use-wallet": "^0.0.25",
-    "@relational-os/block-bridge": "0.0.1",
+    "@relational-os/block-bridge": "^0.0.3",
     "ethers": "^5.4.1",
     "next": "^11.0.0",
     "react": "^17.0.1",
