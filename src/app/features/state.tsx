@@ -2,9 +2,6 @@ import create from "zustand";
 
 import { BlockView } from "@app/components/block";
 
-import testBlocks from "@data/blocks.json";
-import { OSBlock } from "@relational-os/block-bridge";
-
 type BlockStore = {
   blocks: BlockView[];
   setBlocks: (blocks: BlockView[]) => void;
@@ -14,10 +11,7 @@ type BlockStore = {
 };
 
 export const useBlockStore = create<BlockStore>((set, get) => ({
-  blocks: testBlocks.data.map((block: OSBlock) => {
-    console.log("ran");
-    return { block: { ...block } };
-  }),
+  blocks: [],
   // blocks: testBlocks,
   setBlocks: (blocks: BlockView[]) => {
     set(() => {
