@@ -13,6 +13,9 @@ import { useWallet } from "@gimmixfactory/use-wallet";
 export interface BlockView {
   editing?: boolean;
   collapsed?: boolean;
+  ipfsComplete?: boolean;
+  txComplete?: boolean;
+  txConfirmed?: boolean;
   block: OSBlock;
 }
 
@@ -30,6 +33,10 @@ const Block = (view: BlockView) => {
   const [editing, setEditing] = useState(view.editing);
   const [collapsed, setCollapsed] = useState(view.collapsed);
 
+  const [ipfsComplete, setIPFSComplete] = useState(view.ipfsComplete);
+  const [txComplete, setTxComplete] = useState(view.txComplete);
+  const [txConfirmed, setTxConfirmed] = useState(view.txConfirmed);
+
   const toggleEditing = () => setEditing(!editing);
   const toggleCollapsed = () => setCollapsed(!collapsed);
 
@@ -39,12 +46,22 @@ const Block = (view: BlockView) => {
     if (!provider) throw new Error("NO PROVIDER BUT SAVING A BLOCK");
     const os = new RelationalOS(provider);
     const tx = await os.newBlock(block, {
-      IPFSUploadComplete: (hash: string) => console.log(`IPFS HASH: ${hash}`),
+      IPFSUploadComplete: (hash: string) => {
+        setIPFSComplete(true);
+        setBlock(block);
+        toggleEditing();
+
+        console.log(`IPFS HASH: ${hash}`);
+      },
     });
 
     console.log("transaction submitted", tx);
+    setTxComplete(true);
+
     const receipt = await tx.wait(2);
     console.log("transaction confirmed");
+    setTxConfirmed(true);
+
     console.log(receipt);
     console.log(
       `hash: ${receipt.blockHash}, tokenID: ${
@@ -52,9 +69,6 @@ const Block = (view: BlockView) => {
         receipt.events?.pop()?.args["tokenId"]
       }`
     );
-
-    setBlock(block);
-    toggleEditing();
   };
   const handleEditCancelClick = () => toggleEditing();
 
@@ -62,6 +76,9 @@ const Block = (view: BlockView) => {
     setBlock(view.block);
     setEditing(view.editing);
     setCollapsed(view.collapsed);
+    setIPFSComplete(view.ipfsComplete);
+    setTxComplete(view.txComplete);
+    setTxConfirmed(view.txConfirmed);
   }, [view]);
 
   return (
@@ -80,6 +97,23 @@ const Block = (view: BlockView) => {
             <TimeAgo
               datetime={view.block.datetime ? view.block.datetime : ""}
             />
+          </div>
+          <div>
+            {ipfsComplete ? (
+              <span>IPFS</span>
+            ) : (
+              <span className="incomplete">incomplete ipfs</span>
+            )}
+            {txComplete ? (
+              <span>tx received</span>
+            ) : (
+              <span className="incomplete">tx not here yet</span>
+            )}
+            {txConfirmed ? (
+              <span>tx confirmed</span>
+            ) : (
+              <span className="incomplete">tx not confirmed yet</span>
+            )}
           </div>
         </div>
 
@@ -201,6 +235,15 @@ const Block = (view: BlockView) => {
           font-size: 1rem;
           color: #006eff;
           cursor: pointer;
+        }
+
+        span {
+          margin-right: 0.25rem;
+          background-color: #a4ffc7;
+        }
+
+        .incomplete {
+          background-color: #ffe5d5;
         }
       `}</style>
     </div>

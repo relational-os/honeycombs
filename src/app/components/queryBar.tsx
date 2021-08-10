@@ -82,7 +82,12 @@ const QueryBar = () => {
       return;
     }
 
-    var converted = results.data.blocks.map((b: any) => ({ block: b }));
+    var converted = results.data.blocks.map((b: any) => ({
+      ipfsComplete: true,
+      txComplete: true,
+      txConfirmed: true,
+      block: b,
+    }));
     useBlockStore.setState({ blocks: converted });
   }, [results?.data]);
 
