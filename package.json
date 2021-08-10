@@ -1,4 +1,5 @@
 {
+  "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,11 +11,13 @@
   },
   "dependencies": {
     "@gimmixfactory/use-wallet": "^0.0.25",
-    "@relational-os/block-bridge": "0.0.1",
+    "@relational-os/block-bridge": "^0.0.3",
     "ethers": "^5.4.1",
+    "graphql-request": "^3.5.0",
     "next": "^11.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "swr": "^0.5.6",
     "timeago-react": "^3.0.3",
     "zustand": "^3.5.7"
   },
