@@ -96,23 +96,6 @@ const Block = (view: BlockView) => {
               datetime={view.block.datetime ? view.block.datetime : ""}
             />
           </div>
-          <div>
-            {ipfsComplete ? (
-              <span>IPFS</span>
-            ) : (
-              <span className="incomplete">incomplete ipfs</span>
-            )}
-            {txComplete ? (
-              <span>tx received</span>
-            ) : (
-              <span className="incomplete">tx not here yet</span>
-            )}
-            {txConfirmed ? (
-              <span>tx confirmed</span>
-            ) : (
-              <span className="incomplete">tx not confirmed yet</span>
-            )}
-          </div>
         </div>
 
         <div className="spacer"></div>
@@ -163,7 +146,28 @@ const Block = (view: BlockView) => {
       )}
 
       {/* History Button */}
-      {collapsed && <EditHistory {...view}></EditHistory>}
+      {collapsed && !editing && (
+        <>
+          <div>
+            {ipfsComplete ? (
+              <span>IPFS</span>
+            ) : (
+              <span className="incomplete">incomplete ipfs</span>
+            )}
+            {txComplete ? (
+              <span>tx received</span>
+            ) : (
+              <span className="incomplete">tx not here yet</span>
+            )}
+            {txConfirmed ? (
+              <span>tx confirmed</span>
+            ) : (
+              <span className="incomplete">tx not confirmed yet</span>
+            )}
+          </div>
+          <EditHistory {...view}></EditHistory>
+        </>
+      )}
 
       <style jsx>{`
         .block {
