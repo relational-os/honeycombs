@@ -96,12 +96,28 @@ const QueryBar = () => {
   }, [query]);
 
   return (
-    <div>
+    <div className="query-bar">
       <input
         onChange={(e) => {
           setQuery(e.target.value);
         }}
       ></input>
+
+      <style jsx>{`
+        .query-bar input {
+          width: 40rem;
+          padding: 0.25rem 1rem;
+          background: #ffffff;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          box-sizing: border-box;
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+          border-radius: 36px;
+          outline: none;
+        }
+
+        @media screen and (max-width: 768px) {
+        }
+      `}</style>
     </div>
   );
 };

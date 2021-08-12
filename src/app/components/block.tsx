@@ -90,8 +90,7 @@ const Block = (view: BlockView) => {
         </div>
         <Avatar />
         <div className="header-metadata">
-          <div className="creator">{view.block.creator}</div>
-          {/* <div>{account}</div> */}
+          <div className="author">{view.block.creator}</div>
           <div>
             posted{" "}
             <TimeAgo
@@ -182,10 +181,11 @@ const Block = (view: BlockView) => {
         .block-header .header-metadata {
           margin-left: 0.5rem;
         }
-        .block-header .header-metadata .creator {
-          max-width: 7rem;
+        .block-header .header-metadata .author {
+          max-width: 6rem;
           overflow: hidden;
           text-overflow: ellipsis;
+          font-weight: bold;
         }
         .block-header .header-metadata div:last-child {
           margin-top: -0.2rem;

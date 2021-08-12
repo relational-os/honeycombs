@@ -36,9 +36,6 @@ const Header = () => {
           justify-content: center;
         }
 
-        .search {
-        }
-
         nav {
           position: fixed;
           top: 1rem;
