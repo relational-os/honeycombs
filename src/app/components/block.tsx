@@ -116,6 +116,18 @@ const Block = (view: BlockView) => {
         <div className="spacer"></div>
 
         <div className="header-controls">
+          {/* History Button */}
+          {!collapsed ? (
+            <button className="history-button" onClick={toggleCollapsed}>
+              <img src="/assets/icon-history.svg" />
+            </button>
+          ) : (
+            <>
+              <button className="history-button" onClick={toggleCollapsed}>
+                &#10005;
+              </button>
+            </>
+          )}
           {!editing && (
             <>
               <button className="edit-button" onClick={toggleEditing}>
@@ -152,18 +164,7 @@ const Block = (view: BlockView) => {
       )}
 
       {/* History Button */}
-      {!collapsed ? (
-        <button className="history-button" onClick={toggleCollapsed}>
-          &#8614; history
-        </button>
-      ) : (
-        <>
-          <button className="history-button" onClick={toggleCollapsed}>
-            &#8615; history
-          </button>
-          <EditHistory {...view}></EditHistory>
-        </>
-      )}
+      {collapsed && <EditHistory {...view}></EditHistory>}
 
       <style jsx>{`
         .block {
@@ -243,14 +244,18 @@ const Block = (view: BlockView) => {
         }
 
         .history-button {
-          margin-top: 0.5rem;
-          padding: 0;
+          width: 2rem;
+          margin-right: 0.4rem;
+          padding: 0.25rem 0;
           outline: 0;
-          border: 0;
-          background: transparent;
-          font-size: 1rem;
-          color: #006eff;
+          background: rgba(0, 0, 0, 0.05);
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          box-sizing: border-box;
+          border-radius: 6px;
+          font-size: 0.9rem;
           cursor: pointer;
+          line-height: 0.9rem;
+          text-align: center;
         }
 
         .editing .history-button {
