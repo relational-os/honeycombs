@@ -105,9 +105,9 @@ const QueryBar = () => {
 
       <style jsx>{`
         .query-bar input {
-          width: 40rem;
-          padding: 0.25rem 1rem;
-          background: #ffffff;
+          width: 38rem;
+          padding: 0.25rem 1rem 0.25rem 2.5rem;
+          background: #ffffff url("/assets/icon-search.svg") 1rem 50% no-repeat;
           border: 1px solid rgba(0, 0, 0, 0.1);
           box-sizing: border-box;
           box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);

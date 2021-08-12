@@ -82,12 +82,9 @@ const Block = (view: BlockView) => {
   }, [view]);
 
   return (
-    <div className="block">
+    <div className={editing ? "editing block" : "block"}>
       {/* Block Header */}
       <div className="block-header">
-        <div className="post-toggle">
-          <TogglePostInclude block={view.block}></TogglePostInclude>
-        </div>
         <Avatar />
         <div className="header-metadata">
           <div className="author">{view.block.creator}</div>
@@ -120,9 +117,14 @@ const Block = (view: BlockView) => {
 
         <div className="header-controls">
           {!editing && (
-            <button className="edit-button" onClick={toggleEditing}>
-              edit
-            </button>
+            <>
+              <button className="edit-button" onClick={toggleEditing}>
+                Edit
+              </button>
+              <div className="post-toggle">
+                <TogglePostInclude block={view.block}></TogglePostInclude>
+              </div>
+            </>
           )}
         </div>
       </div>
@@ -149,7 +151,7 @@ const Block = (view: BlockView) => {
         </div>
       )}
 
-      {/* Edit Button */}
+      {/* History Button */}
       {!collapsed ? (
         <button className="history-button" onClick={toggleCollapsed}>
           &#8614; history
@@ -166,9 +168,17 @@ const Block = (view: BlockView) => {
       <style jsx>{`
         .block {
           position: relative;
-          padding-bottom: 1rem;
+          padding: 0 1rem 1rem;
           border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
+
+        .block.editing {
+          background: #fff;
+          box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+          border-radius: 8px;
+          border: none;
+        }
+
         .block-header {
           display: flex;
           flex-direction: row;
@@ -192,9 +202,14 @@ const Block = (view: BlockView) => {
           font-size: 0.9rem;
           color: rgba(0, 0, 0, 0.3);
         }
+
+        .block-header .header-controls {
+          display: flex;
+          flex-direction: row;
+        }
+
         .block-header .post-toggle {
-          width: 24px;
-          margin-left: -24px;
+          margin-left: 0.75rem;
         }
         @media screen and (max-width: 768px) {
           .block-header .post-toggle {
@@ -217,12 +232,13 @@ const Block = (view: BlockView) => {
         }
 
         .edit-button {
-          padding: 0;
+          padding: 0.25rem 0.5rem;
           outline: 0;
-          border: 0;
-          background: transparent;
-          font-size: 1rem;
-          color: #006eff;
+          background: rgba(0, 0, 0, 0.05);
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          box-sizing: border-box;
+          border-radius: 6px;
+          font-size: 0.9rem;
           cursor: pointer;
         }
 
@@ -235,6 +251,10 @@ const Block = (view: BlockView) => {
           font-size: 1rem;
           color: #006eff;
           cursor: pointer;
+        }
+
+        .editing .history-button {
+          display: none;
         }
 
         span {

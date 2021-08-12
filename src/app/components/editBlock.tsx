@@ -22,7 +22,7 @@ const EditBlock = (props: EditBlockView) => {
     <div>
       <textarea
         className="context"
-        defaultValue={block.content}
+        defaultValue={block.context}
         onChange={(e) => setContext(e.target.value)}
       ></textarea>
       <textarea
@@ -43,7 +43,15 @@ const EditBlock = (props: EditBlockView) => {
 
       <style jsx>{`
         textarea {
-          width: 100%;
+          width: calc(100% + 2rem);
+          padding: 0.25rem 1rem;
+          margin: 0 -1rem;
+          border: none;
+          outline: none;
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        textarea.context {
+          height: 2.5rem;
         }
         textarea.content {
           height: 7rem;
