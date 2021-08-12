@@ -168,13 +168,15 @@ const Block = (view: BlockView) => {
       <style jsx>{`
         .block {
           position: relative;
+
           padding: 0 1rem 1rem;
+          border-radius: 8px;
         }
 
         .block::after {
           content: "";
           display: block;
-          margin-top: 1rem;
+          margin-top: 1.5rem;
           border-bottom: 1px solid rgba(0, 0, 0, 0.1);
           width: calc(100% - 2rem;);
         }
@@ -182,11 +184,15 @@ const Block = (view: BlockView) => {
         .block.editing {
           background: #fff;
           box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
-          border-radius: 8px;
           border: none;
         }
 
-        .block.editing::after {
+        .block.new {
+          background: #fff6e8;
+        }
+
+        .block.editing::after,
+        .block.new::after {
           display: none;
         }
 
