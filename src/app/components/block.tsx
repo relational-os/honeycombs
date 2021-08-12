@@ -87,7 +87,9 @@ const Block = (view: BlockView) => {
       <div className="block-header">
         <Avatar />
         <div className="header-metadata">
-          <div className="author">{view.block.creator}</div>
+          <div className="author">
+            {view.block.creator ? view.block.creator : "test.eth"}
+          </div>
           <div>
             posted{" "}
             <TimeAgo
@@ -152,10 +154,7 @@ const Block = (view: BlockView) => {
         <div className="block-body">
           <div className="block-context">{block.context}</div>
           {block.type == "text" && (
-            <p className="block-text">
-              {block.content}
-              {/* <pre>{JSON.stringify(view, null, 2)}</pre> */}
-            </p>
+            <p className="block-text">{block.content}</p>
           )}
           {block.type == "image" && (
             <img src={block.content} className="block-image" />
@@ -170,7 +169,14 @@ const Block = (view: BlockView) => {
         .block {
           position: relative;
           padding: 0 1rem 1rem;
+        }
+
+        .block::after {
+          content: "";
+          display: block;
+          margin-top: 1rem;
           border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          width: calc(100% - 2rem;);
         }
 
         .block.editing {
@@ -178,6 +184,10 @@ const Block = (view: BlockView) => {
           box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
           border-radius: 8px;
           border: none;
+        }
+
+        .block.editing::after {
+          display: none;
         }
 
         .block-header {

@@ -31,11 +31,11 @@ const EditBlock = (props: EditBlockView) => {
         onChange={(e) => setContent(e.target.value)}
       ></textarea>
 
-      <button className="cancel" onClick={handleEditCancelClick}>
-        &#10005;
-      </button>
       <div className="button-bar">
         <div></div>
+        <button className="cancel" onClick={handleEditCancelClick}>
+          Cancel
+        </button>
         <button className="save" onClick={saveBlock}>
           Save
         </button>
@@ -48,10 +48,14 @@ const EditBlock = (props: EditBlockView) => {
           margin: 0 -1rem;
           border: none;
           outline: none;
-          border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
         textarea.context {
           height: 2.5rem;
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          margin-bottom: 0.4rem;
+          font-style: italic;
+          color: rgba(0, 0, 0, 0.5);
         }
         textarea.content {
           height: 7rem;
@@ -77,16 +81,12 @@ const EditBlock = (props: EditBlockView) => {
         }
 
         button.cancel {
-          position: absolute;
-          top: 1.6rem;
-          right: 0;
+          margin-right: 0.5rem;
           border: 0;
           outline: 0;
           background: transparent;
-          width: 24px;
-          height: 24px;
-          font-size: 20px;
           cursor: pointer;
+          color: rgba(0, 0, 0, 0.5);
         }
 
         @media screen and (max-width: 768px) {
