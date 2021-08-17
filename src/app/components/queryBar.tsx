@@ -48,6 +48,7 @@ const QueryBar = () => {
             context
             uri
             type
+            datetimeString
           }
         }
       `);
@@ -86,8 +87,11 @@ const QueryBar = () => {
       ipfsComplete: true,
       txComplete: true,
       txConfirmed: true,
-      block: b,
+      block: { ...b, datetime: b.datetimeString },
     }));
+
+    console.log(converted);
+
     useBlockStore.setState({ blocks: converted });
   }, [results?.data]);
 
