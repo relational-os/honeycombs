@@ -115,7 +115,7 @@ const QueryBar = () => {
         <div className="spacer"></div>
         <div className="highlight-toggle">
           <label>
-            <input type="checkbox" checked /> Highlight unread blocks
+            <input type="checkbox" defaultChecked /> Highlight unread blocks
           </label>
         </div>
       </div>
