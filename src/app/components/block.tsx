@@ -88,7 +88,7 @@ const Block = (view: BlockView) => {
         <Avatar />
         <div className="header-metadata">
           <div className="author">
-            {view.block.creator ? view.block.creator : "test.eth"}
+            {view.block.author ? view.block.author : "test.eth"}
           </div>
           <div>
             posted{" "}
