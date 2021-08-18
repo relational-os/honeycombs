@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TimeAgo from "timeago-react";
+import Image from "next/image";
 // import { useWallet } from "@gimmixfactory/use-wallet";
 
 import { OSBlock, RelationalOS } from "@relational-os/block-bridge";
@@ -25,8 +26,6 @@ export interface EditBlockView extends BlockView {
 }
 
 const Block = (view: BlockView) => {
-  console.log(`block text ${view.block.content}, editing: ${view.editing}`);
-
   const { provider } = useWallet();
 
   const [block, setBlock] = useState(view.block);
@@ -37,8 +36,16 @@ const Block = (view: BlockView) => {
   const [txComplete, setTxComplete] = useState(view.txComplete);
   const [txConfirmed, setTxConfirmed] = useState(view.txConfirmed);
 
+  const [ethName, setEthName] = useState("");
+
   const toggleEditing = () => setEditing(!editing);
   const toggleCollapsed = () => setCollapsed(!collapsed);
+
+  if (view.block.author) {
+    provider?.lookupAddress(view.block.author).then((v) => {
+      setEthName(v);
+    });
+  }
 
   const handleEditSaveClick = async (block: OSBlock) => {
     console.log("saved", block);
@@ -79,6 +86,9 @@ const Block = (view: BlockView) => {
     setIPFSComplete(view.ipfsComplete);
     setTxComplete(view.txComplete);
     setTxConfirmed(view.txConfirmed);
+    if (view.block.author) {
+      setEthName(view.block.author.slice(0, 6) + "...");
+    }
   }, [view]);
 
   return (
@@ -88,7 +98,7 @@ const Block = (view: BlockView) => {
         <Avatar />
         <div className="header-metadata">
           <div className="author">
-            {view.block.author ? view.block.author : "test.eth"}
+            {view.block.author && provider ? ethName : <div>test.eth</div>}
           </div>
           <div>
             posted{" "}
@@ -104,7 +114,12 @@ const Block = (view: BlockView) => {
           {/* History Button */}
           {!collapsed ? (
             <button className="history-button" onClick={toggleCollapsed}>
-              <img src="/assets/icon-history.svg" />
+              <Image
+                src="/assets/icon-history.svg"
+                alt="history"
+                width={12}
+                height={12}
+              />
             </button>
           ) : (
             <>
@@ -140,7 +155,11 @@ const Block = (view: BlockView) => {
             <p className="block-text">{block.content}</p>
           )}
           {block.type == "image" && (
-            <img src={block.content} className="block-image" />
+            <Image
+              src={block.content!}
+              className="block-image"
+              alt="this blocks image"
+            />
           )}
         </div>
       )}
@@ -213,7 +232,7 @@ const Block = (view: BlockView) => {
           margin-left: 0.5rem;
         }
         .block-header .header-metadata .author {
-          max-width: 6rem;
+          max-width: 10rem;
           overflow: hidden;
           text-overflow: ellipsis;
           font-weight: bold;
@@ -266,7 +285,7 @@ const Block = (view: BlockView) => {
         .history-button {
           width: 2rem;
           margin-right: 0.4rem;
-          padding: 0.25rem 0;
+          padding: 0.25rem;
           outline: 0;
           background: rgba(0, 0, 0, 0.05);
           border: 1px solid rgba(0, 0, 0, 0.1);
