@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { useWallet } from "@gimmixfactory/use-wallet";
 import NewBlockButton from "./newBlockButton";
@@ -13,7 +13,18 @@ const getShortAddress = (address: string) => {
 };
 
 const ConnectWalletButton = () => {
-  const { account, connect, disconnect } = useWallet();
+  const { account, provider, connect, disconnect } = useWallet();
+
+  const [network, setNetwork] = useState("");
+
+  useEffect(() => {
+    if (provider) {
+      provider.getNetwork().then((n) => {
+        if (n.chainId == 1) setNetwork("mainnet");
+        else setNetwork(n.name);
+      });
+    }
+  });
 
   return (
     <div className="authentication">
@@ -23,7 +34,13 @@ const ConnectWalletButton = () => {
         <>
           <button onClick={() => disconnect()} className="disconnect">
             <div style={{ fontSize: "1rem" }}>{getShortAddress(account)}</div>
-            Disconnect Wallet
+            <b>Disconnect Wallet</b>
+            <div className="center-flex">
+              <span className="dot"></span>
+              <div style={{ marginRight: ".5rem", fontSize: "1rem" }}>
+                network: {network}
+              </div>
+            </div>
           </button>
 
           <NewBlockButton></NewBlockButton>
@@ -32,6 +49,11 @@ const ConnectWalletButton = () => {
 
       <style jsx>
         {`
+          .center-flex {
+            display: flex;
+            align-items: center;
+          }
+
           .authentication {
             position: fixed;
             top: 1rem;
@@ -65,6 +87,16 @@ const ConnectWalletButton = () => {
               right: 1rem;
               z-index: 111;
             }
+          }
+
+          .dot {
+            height: 0.5rem;
+            width: 0.5rem;
+            background-color: ${network == "rinkeby" ? "#0f0" : "#f00"};
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+            margin-right: 0.5rem;
           }
         `}
       </style>
