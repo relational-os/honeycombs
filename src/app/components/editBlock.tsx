@@ -5,6 +5,7 @@ import { EditBlockView } from "./block";
 const EditBlock = (props: EditBlockView) => {
   const [content, setContent] = useState("");
   const [context, setContext] = useState("");
+  const [blockType, setBlockType] = useState(props.block.type);
 
   const { block, handleEditSaveClick, handleEditCancelClick } = props;
 
@@ -20,23 +21,41 @@ const EditBlock = (props: EditBlockView) => {
 
   return (
     <div>
-      <textarea
-        className="context"
-        placeholder="context"
-        defaultValue={block.context}
-        onChange={(e) => setContext(e.target.value)}
-      ></textarea>
-      <textarea
-        className="content"
-        placeholder="what are you thinking?"
-        defaultValue={block.content}
-        onChange={(e) => setContent(e.target.value)}
-      ></textarea>
+      {blockType == "text" ? (
+        <div>
+          <textarea
+            className="context"
+            placeholder="context"
+            defaultValue={block.context}
+            onChange={(e) => setContext(e.target.value)}
+          ></textarea>
+          <textarea
+            className="content"
+            placeholder="what are you thinking?"
+            defaultValue={block.content}
+            onChange={(e) => setContent(e.target.value)}
+          ></textarea>
+        </div>
+      ) : (
+        <div>
+          <span>our upload form goes here!</span>
+        </div>
+      )}
 
       <div className="button-bar">
         <ul className="type-chooser">
-          <li className="text active">Text</li>
-          <li className="image">Image</li>
+          <li
+            className={blockType == "text" ? "text active" : "text"}
+            onClick={(e) => setBlockType("text")}
+          >
+            Text
+          </li>
+          <li
+            className={blockType == "image" ? "image active" : "image"}
+            onClick={(e) => setBlockType("image")}
+          >
+            Image
+          </li>
         </ul>
         <div></div>
         <button className="cancel" onClick={handleEditCancelClick}>
