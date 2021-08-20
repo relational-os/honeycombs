@@ -21,26 +21,26 @@ const EditBlock = (props: EditBlockView) => {
 
   return (
     <div>
-      {blockType == "text" ? (
-        <div>
-          <textarea
-            className="context"
-            placeholder="context"
-            defaultValue={block.context}
-            onChange={(e) => setContext(e.target.value)}
-          ></textarea>
+      <div>
+        <textarea
+          className="context"
+          placeholder="context"
+          defaultValue={block.context}
+          onChange={(e) => setContext(e.target.value)}
+        ></textarea>
+        {blockType == "text" ? (
           <textarea
             className="content"
             placeholder="what are you thinking?"
             defaultValue={block.content}
             onChange={(e) => setContent(e.target.value)}
           ></textarea>
-        </div>
-      ) : (
-        <div>
-          <span>our upload form goes here!</span>
-        </div>
-      )}
+        ) : (
+          <div className="upload-dropzone">
+            <span>☁️ Feed me an image ⬆️</span>
+          </div>
+        )}
+      </div>
 
       <div className="button-bar">
         <ul className="type-chooser">
@@ -86,7 +86,16 @@ const EditBlock = (props: EditBlockView) => {
           color: rgba(0, 0, 0, 0.5);
         }
         textarea.content {
-          height: 7rem;
+          height: 8rem;
+        }
+
+        .upload-dropzone span {
+          display: block;
+          margin-bottom: 0.5rem;
+          padding: 3rem 0;
+          border: 1px dashed lightblue;
+          border-radius: 6px;
+          text-align: center;
         }
 
         .button-bar {
