@@ -10,6 +10,7 @@ import EditHistory from "./editHistory";
 import TogglePostInclude from "./togglePostInclude";
 import Avatar from "./avatar";
 import { useWallet } from "@gimmixfactory/use-wallet";
+import { ENSName } from "react-ens-name";
 
 export interface BlockView {
   editing?: boolean;
@@ -36,16 +37,8 @@ const Block = (view: BlockView) => {
   const [txComplete, setTxComplete] = useState(view.txComplete);
   const [txConfirmed, setTxConfirmed] = useState(view.txConfirmed);
 
-  const [ethName, setEthName] = useState("");
-
   const toggleEditing = () => setEditing(!editing);
   const toggleCollapsed = () => setCollapsed(!collapsed);
-
-  if (view.block.author) {
-    provider?.lookupAddress(view.block.author).then((v) => {
-      setEthName(v);
-    });
-  }
 
   const handleEditSaveClick = async (block: OSBlock) => {
     console.log("saved", block);
@@ -86,9 +79,6 @@ const Block = (view: BlockView) => {
     setIPFSComplete(view.ipfsComplete);
     setTxComplete(view.txComplete);
     setTxConfirmed(view.txConfirmed);
-    if (view.block.author) {
-      setEthName(view.block.author.slice(0, 6) + "...");
-    }
   }, [view]);
 
   return (
@@ -98,7 +88,7 @@ const Block = (view: BlockView) => {
         <Avatar />
         <div className="header-metadata">
           <div className="author">
-            {view.block.author && provider ? ethName : <div>test.eth</div>}
+            <ENSName address={view.block.author}></ENSName>
           </div>
           <div>
             posted{" "}

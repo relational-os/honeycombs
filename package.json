@@ -7,7 +7,8 @@
     "tsc": "tsc",
     "prettier": "prettier --write ./src",
     "start": "next",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "clean": "rm -rf node_modules/ yarn.lock package-lock.json && npm install"
   },
   "dependencies": {
     "@gimmixfactory/use-wallet": "^0.0.25",
@@ -17,6 +18,7 @@
     "next": "^11.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-ens-name": "^0.1.0",
     "swr": "^0.5.6",
     "timeago-react": "^3.0.3",
     "zustand": "^3.5.7"
