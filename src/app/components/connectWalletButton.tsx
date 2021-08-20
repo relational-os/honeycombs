@@ -3,14 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useWallet } from "@gimmixfactory/use-wallet";
 import NewBlockButton from "./newBlockButton";
 
-// TODO: move to some sort of utils dir?
-const getShortAddress = (address: string) => {
-  return (
-    address?.slice(0, 6) +
-    "..." +
-    address?.slice(address.length - 4, address.length)
-  );
-};
+import { ENSName, AddressDisplayEnum } from "react-ens-name";
 
 const ConnectWalletButton = () => {
   const { account, provider, connect, disconnect } = useWallet();
@@ -33,7 +26,13 @@ const ConnectWalletButton = () => {
       ) : (
         <>
           <button onClick={() => disconnect()} className="disconnect">
-            <div style={{ fontSize: "1rem" }}>{getShortAddress(account)}</div>
+            <div style={{ fontSize: "1rem" }}>
+              <ENSName
+                address={account}
+                displayType={AddressDisplayEnum.FIRST4_LAST4}
+                withEllipses={true}
+              ></ENSName>
+            </div>
             <b>Disconnect Wallet</b>
             <div className="center-flex">
               <span className="dot"></span>
