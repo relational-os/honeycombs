@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 
 import { EditBlockView } from "./block";
 
@@ -8,6 +9,14 @@ const EditBlock = (props: EditBlockView) => {
   const [blockType, setBlockType] = useState(props.block.type);
 
   const { block, handleEditSaveClick, handleEditCancelClick } = props;
+
+  const onDrop = useCallback((acceptedFiles) => {
+    // Do something with the files
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: "image/*",
+  });
 
   const saveBlock = () => {
     const block = {
@@ -36,8 +45,13 @@ const EditBlock = (props: EditBlockView) => {
             onChange={(e) => setContent(e.target.value)}
           ></textarea>
         ) : (
-          <div className="upload-dropzone">
-            <span>☁️ Feed me an image ⬆️</span>
+          <div className="upload-dropzone" {...getRootProps()}>
+            <input {...getInputProps()} />
+            {isDragActive ? (
+              <span>☁️ Drop the image here</span>
+            ) : (
+              <span>☁️ Feed me an image ⬆️</span>
+            )}
           </div>
         )}
       </div>
