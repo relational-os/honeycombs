@@ -109,6 +109,7 @@ const EditBlock = (props: EditBlockView) => {
 
         .type-chooser {
           display: flex;
+          display: none; //hide type chooser
           flex-direction: row;
           align-items: center;
           font-size: 0.9rem;
