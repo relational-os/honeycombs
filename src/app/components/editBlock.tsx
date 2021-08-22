@@ -8,10 +8,20 @@ const EditBlock = (props: EditBlockView) => {
   const [context, setContext] = useState("");
   const [blockType, setBlockType] = useState(props.block.type);
 
+  const [images, setImages] = useState<{ preview: string }[]>();
+
   const { block, handleEditSaveClick, handleEditCancelClick } = props;
 
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
+    console.log(acceptedFiles);
+    setImages(
+      acceptedFiles.map((file: File) => {
+        return Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        });
+      })
+    );
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -19,12 +29,15 @@ const EditBlock = (props: EditBlockView) => {
   });
 
   const saveBlock = () => {
+    console.log(images);
+
     const block = {
       ...props.block,
-      content: content,
+      content: blockType == "image" && images ? [...images].pop() : content,
       context: context,
     };
 
+    // @ts-ignore
     handleEditSaveClick(block);
   };
 
@@ -41,16 +54,30 @@ const EditBlock = (props: EditBlockView) => {
           <textarea
             className="content"
             placeholder="what are you thinking?"
-            defaultValue={block.content}
+            defaultValue={block.content as string}
             onChange={(e) => setContent(e.target.value)}
           ></textarea>
         ) : (
           <div className="upload-dropzone" {...getRootProps()}>
             <input {...getInputProps()} />
-            {isDragActive ? (
-              <span>☁️ Drop the image here</span>
+
+            {images ? (
+              images.map((img, idx) => {
+                // eslint-disable-next-line
+                return (
+                  <span key={idx}>
+                    <img src={img.preview} alt="test"></img>
+                  </span>
+                );
+              })
             ) : (
-              <span>☁️ Feed me an image ⬆️</span>
+              <>
+                {isDragActive ? (
+                  <span>☁️ Drop the image here</span>
+                ) : (
+                  <span>☁️ Feed me an image ⬆️</span>
+                )}
+              </>
             )}
           </div>
         )}

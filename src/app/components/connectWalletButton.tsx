@@ -1,14 +1,41 @@
 import React, { useEffect, useState } from "react";
 
+import Modal from "react-modal";
+
 import { useWallet } from "@gimmixfactory/use-wallet";
 import NewBlockButton from "./newBlockButton";
 
-import { ENSName, AddressDisplayEnum } from "react-ens-name";
+// import { ENSName, AddressDisplayEnum } from "react-ens-name";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
 
 const ConnectWalletButton = () => {
   const { account, provider, connect, disconnect } = useWallet();
+  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const [network, setNetwork] = useState("");
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = '#f00';
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   useEffect(() => {
     if (provider) {
@@ -24,26 +51,38 @@ const ConnectWalletButton = () => {
       {account == undefined ? (
         <button onClick={() => connect()}>Connect Wallet</button>
       ) : (
-        <>
-          <button onClick={() => disconnect()} className="disconnect">
-            <div style={{ fontSize: "1rem" }}>
-              <ENSName
-                address={account}
-                displayType={AddressDisplayEnum.FIRST4_LAST4}
-                withEllipses={true}
-              ></ENSName>
-            </div>
-            <b>Disconnect Wallet</b>
-            <div className="center-flex">
-              <span className="dot"></span>
-              <div style={{ marginRight: ".5rem", fontSize: "1rem" }}>
-                network: {network}
-              </div>
-            </div>
+        <div className="disconnect">
+          <button style={{ fontSize: "1rem" }} onClick={openModal}>
+            {account}
+            {/* <ENSName
+              address={account}
+              displayType={AddressDisplayEnum.FIRST4_LAST4}
+              withEllipses={true}
+            ></ENSName> */}
           </button>
+          <button onClick={() => disconnect()} className="disconnect">
+            <b>Disconnect Wallet</b>
+          </button>
+          <div className="center-flex">
+            <span className="dot"></span>
+            <div style={{ marginRight: ".5rem", fontSize: "1rem" }}>
+              network: {network}
+            </div>
+          </div>
 
           <NewBlockButton></NewBlockButton>
-        </>
+
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            contentLabel="Example Modal"
+            style={customStyles}
+          >
+            <h1>THIS IS A MODAL</h1>
+            <button onClick={closeModal}>close</button>
+          </Modal>
+        </div>
       )}
 
       <style jsx>

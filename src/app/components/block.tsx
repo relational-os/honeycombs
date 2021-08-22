@@ -10,7 +10,7 @@ import EditHistory from "./editHistory";
 import TogglePostInclude from "./togglePostInclude";
 import Avatar from "./avatar";
 import { useWallet } from "@gimmixfactory/use-wallet";
-import { ENSName } from "react-ens-name";
+// import { ENSName } from "react-ens-name";
 
 export interface BlockView {
   editing?: boolean;
@@ -88,7 +88,8 @@ const Block = (view: BlockView) => {
         <Avatar />
         <div className="header-metadata">
           <div className="author">
-            <ENSName address={view.block.author}></ENSName>
+            {/* <ENSName address={view.block.author}></ENSName> */}
+            {view.block.author}
           </div>
           <div>
             posted{" "}
@@ -145,8 +146,8 @@ const Block = (view: BlockView) => {
             <p className="block-text">{block.content}</p>
           )}
           {block.type == "image" && (
-            <Image
-              src={block.content!}
+            <img
+              src={"https://ipfs.io/ipfs/" + block.content}
               className="block-image"
               alt="this blocks image"
             />
