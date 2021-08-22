@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "1.0.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -7,16 +7,20 @@
     "tsc": "tsc",
     "prettier": "prettier --write ./src",
     "start": "next",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "clean": "rm -rf node_modules/ yarn.lock package-lock.json && npm install"
   },
   "dependencies": {
     "@gimmixfactory/use-wallet": "^0.0.25",
-    "@relational-os/block-bridge": "^0.0.3",
+    "@relational-os/block-bridge": "^0.1.0",
     "ethers": "^5.4.1",
     "graphql-request": "^3.5.0",
     "next": "^11.0.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-dropzone": "^11.3.4",
+    "react-ens-name": "^0.1.0",
+    "react-modal": "^3.14.3",
     "swr": "^0.5.6",
     "timeago-react": "^3.0.3",
     "zustand": "^3.5.7"
@@ -24,6 +28,7 @@
   "devDependencies": {
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",
+    "@types/react-modal": "^3.12.1",
     "@types/uuid": "^8.3.1",
     "eslint": "^7.29.0",
     "eslint-config-next": "^11.0.1",

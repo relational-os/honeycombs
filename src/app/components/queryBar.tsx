@@ -48,6 +48,7 @@ const QueryBar = () => {
             context
             uri
             type
+            datetimeString
           }
         }
       `);
@@ -82,7 +83,15 @@ const QueryBar = () => {
       return;
     }
 
-    var converted = results.data.blocks.map((b: any) => ({ block: b }));
+    var converted = results.data.blocks.map((b: any) => ({
+      ipfsComplete: true,
+      txComplete: true,
+      txConfirmed: true,
+      block: { ...b, datetime: b.datetimeString },
+    }));
+
+    console.log(converted);
+
     useBlockStore.setState({ blocks: converted });
   }, [results?.data]);
 
@@ -91,12 +100,68 @@ const QueryBar = () => {
   }, [query]);
 
   return (
-    <div>
+    <div className="query-bar">
       <input
+        className="search"
         onChange={(e) => {
           setQuery(e.target.value);
         }}
       ></input>
+      <div className="filter-bar">
+        <ul className="order-chooser">
+          <li className="newest active">Newest First</li>
+          <li className="oldest">Oldest First</li>
+        </ul>
+        <div className="spacer"></div>
+        <div className="highlight-toggle">
+          <label>
+            <input type="checkbox" defaultChecked /> Highlight unread blocks
+          </label>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .query-bar input.search {
+          position: sticky;
+          top: 1rem;
+          width: 38rem;
+          padding: 0.25rem 1rem 0.25rem 2.5rem;
+          background: #ffffff url("/assets/icon-search.svg") 1rem 50% no-repeat;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          box-sizing: border-box;
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+          border-radius: 36px;
+          outline: none;
+          z-index: 100;
+        }
+
+        .filter-bar {
+          display: flex;
+          flex-direction: row;
+          align-content: flex-end;
+          margin: 1rem 0.5rem 0;
+          font-size: 0.9rem;
+        }
+        .filter-bar .spacer {
+          flex: 2;
+        }
+
+        .order-chooser {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
+        .order-chooser li {
+          padding: 0.2rem 0.6rem;
+          border-radius: 6px;
+          color: rgba(0, 0, 0, 0.5);
+          cursor: pointer;
+        }
+        .order-chooser li.active {
+          background: rgba(0, 0, 0, 0.05);
+          cursor: default;
+        }
+      `}</style>
     </div>
   );
 };

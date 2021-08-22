@@ -10,7 +10,7 @@ const NewBlockButton = () => {
   const createNewBlock = (type: string) => {
     var block: BlockView = {
       block: {
-        creator: account,
+        author: account,
         type: type,
       },
       editing: true,
