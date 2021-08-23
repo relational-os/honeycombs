@@ -9,7 +9,7 @@ import EditHistory from "./editHistory";
 import TogglePostInclude from "./togglePostInclude";
 import Avatar from "./avatar";
 import { useWallet } from "@gimmixorg/use-wallet";
-// import { ENSName } from "react-ens-name";
+import { ENSName } from "react-ens-name";
 
 export interface BlockView {
   editing?: boolean;
@@ -87,8 +87,7 @@ const Block = (view: BlockView) => {
         <Avatar />
         <div className="header-metadata">
           <div className="author">
-            {/* <ENSName address={view.block.author}></ENSName> */}
-            {view.block.author}
+            <ENSName address={view.block.author}></ENSName>
           </div>
           <div>
             posted{" "}

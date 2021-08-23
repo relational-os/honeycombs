@@ -5,7 +5,7 @@ import Modal from "react-modal";
 import { useWallet } from "@gimmixorg/use-wallet";
 import NewBlockButton from "./newBlockButton";
 
-// import { ENSName, AddressDisplayEnum } from "react-ens-name";
+import { ENSName, AddressDisplayEnum } from "react-ens-name";
 
 const customStyles = {
   content: {
@@ -53,12 +53,11 @@ const ConnectWalletButton = () => {
       ) : (
         <div className="disconnect">
           <button style={{ fontSize: "1rem" }} onClick={openModal}>
-            {account}
-            {/* <ENSName
+            <ENSName
               address={account}
               displayType={AddressDisplayEnum.FIRST4_LAST4}
               withEllipses={true}
-            ></ENSName> */}
+            ></ENSName>
           </button>
           <button onClick={() => disconnect()} className="disconnect">
             <b>Disconnect Wallet</b>
