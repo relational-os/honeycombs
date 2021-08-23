@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Modal from "react-modal";
 
-import { useWallet } from "@gimmixfactory/use-wallet";
+import { useWallet } from "@gimmixorg/use-wallet";
 import NewBlockButton from "./newBlockButton";
 
 // import { ENSName, AddressDisplayEnum } from "react-ens-name";

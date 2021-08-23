@@ -3,7 +3,7 @@ import { request, gql } from "graphql-request";
 import { Variables } from "graphql-request/dist/types";
 import useSWR, { SWRConfiguration } from "swr";
 import { useBlockStore } from "@app/features/state";
-import { useWallet } from "@gimmixfactory/use-wallet";
+import { useWallet } from "@gimmixorg/use-wallet";
 
 const graphURL =
   "https://api.thegraph.com/subgraphs/name/relational-os/honeycombs";

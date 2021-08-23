@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TimeAgo from "timeago-react";
 import Image from "next/image";
-// import { useWallet } from "@gimmixfactory/use-wallet";
 
 import { OSBlock, RelationalOS } from "@relational-os/block-bridge";
 
@@ -9,7 +8,7 @@ import EditBlock from "./editBlock";
 import EditHistory from "./editHistory";
 import TogglePostInclude from "./togglePostInclude";
 import Avatar from "./avatar";
-import { useWallet } from "@gimmixfactory/use-wallet";
+import { useWallet } from "@gimmixorg/use-wallet";
 // import { ENSName } from "react-ens-name";
 
 export interface BlockView {

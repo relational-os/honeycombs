@@ -1,5 +1,5 @@
 import { useBlockStore } from "@app/features/state";
-import { useWallet } from "@gimmixfactory/use-wallet";
+import { useWallet } from "@gimmixorg/use-wallet";
 import React from "react";
 import { BlockView } from "./block";
 
