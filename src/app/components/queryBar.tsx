@@ -22,6 +22,25 @@ const useQuery = (
   return { data, error, refresh: mutate };
 };
 
+const baseQuery = gql`
+  query BlockQuery($author: String) {
+    blocks(
+      first: 25
+      orderBy: datetime
+      orderDirection: desc # where: { author: $author }
+    ) {
+      id
+      owner
+      author
+      content
+      context
+      uri
+      type
+      datetimeString
+    }
+  }
+`;
+
 const QueryBar = () => {
   const [query, setQuery] = useState("");
   const [params, setParams] = useState<Record<string, string>>({});
@@ -30,28 +49,10 @@ const QueryBar = () => {
   const { account } = useWallet();
 
   useEffect(() => {
+    console.log(account);
     if (account !== undefined) {
       setParams({ author: account });
-
-      setGQLQuery(gql`
-        query BlockQuery($author: String) {
-          blocks(
-            first: 10
-            orderBy: datetime
-            orderDirection: desc
-            where: { author: $author }
-          ) {
-            id
-            owner
-            author
-            content
-            context
-            uri
-            type
-            datetimeString
-          }
-        }
-      `);
+      setGQLQuery(baseQuery);
     }
   }, [account]);
 
