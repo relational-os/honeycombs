@@ -4,13 +4,13 @@ import { useDropzone } from "react-dropzone";
 import { EditBlockView } from "./block";
 
 const EditBlock = (props: EditBlockView) => {
-  const [content, setContent] = useState("");
-  const [context, setContext] = useState("");
-  const [blockType, setBlockType] = useState(props.block.type);
+  const { block, handleEditSaveClick, handleEditCancelClick } = props;
+
+  const [content, setContent] = useState(block.content);
+  const [context, setContext] = useState(block.context);
+  const [blockType, setBlockType] = useState(block.type);
 
   const [images, setImages] = useState<{ preview: string }[]>();
-
-  const { block, handleEditSaveClick, handleEditCancelClick } = props;
 
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
@@ -29,16 +29,14 @@ const EditBlock = (props: EditBlockView) => {
   });
 
   const saveBlock = () => {
-    console.log(images);
-
-    const block = {
-      ...props.block,
+    const b = {
+      ...block,
       content: blockType == "image" && images ? [...images].pop() : content,
       context: context,
     };
 
     // @ts-ignore
-    handleEditSaveClick(block);
+    handleEditSaveClick(b);
   };
 
   return (
@@ -47,14 +45,14 @@ const EditBlock = (props: EditBlockView) => {
         <textarea
           className="context"
           placeholder="context"
-          defaultValue={block.context}
+          value={context}
           onChange={(e) => setContext(e.target.value)}
         ></textarea>
         {blockType == "text" ? (
           <textarea
             className="content"
             placeholder="what are you thinking?"
-            defaultValue={block.content as string}
+            value={content as string}
             onChange={(e) => setContent(e.target.value)}
           ></textarea>
         ) : (
@@ -63,7 +61,6 @@ const EditBlock = (props: EditBlockView) => {
 
             {images ? (
               images.map((img, idx) => {
-                // eslint-disable-next-line
                 return (
                   <span key={idx}>
                     <img src={img.preview} alt="test"></img>

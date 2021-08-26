@@ -2,15 +2,17 @@ import React from "react";
 
 import Block from "@app/components/block";
 
-import { useBlockStore } from "@app/features/state";
+import { useBlockStore, BlockStore } from "@app/features/state";
+
+const blockSelector = (state: BlockStore) => state.blocks;
 
 const IndexPage = () => {
-  const blocks = useBlockStore((state) => state.blocks);
+  const blocks = useBlockStore(blockSelector);
 
   return (
     <div className="index">
-      {blocks.map((block, index) => {
-        return <Block key={`block_${index}`} {...block}></Block>;
+      {blocks.map((block) => {
+        return <Block key={block.uuid} {...block}></Block>;
       })}
 
       <style jsx>{`

@@ -4,6 +4,7 @@ import { Variables } from "graphql-request/dist/types";
 import useSWR, { SWRConfiguration } from "swr";
 import { useBlockStore } from "@app/features/state";
 import { useWallet } from "@gimmixorg/use-wallet";
+import { v4 as uuid } from "uuid";
 
 const graphURL =
   "https://api.thegraph.com/subgraphs/name/relational-os/honeycombs";
@@ -85,6 +86,7 @@ const QueryBar = () => {
     }
 
     var converted = results.data.blocks.map((b: any) => ({
+      uuid: uuid(),
       ipfsComplete: true,
       txComplete: true,
       txConfirmed: true,
