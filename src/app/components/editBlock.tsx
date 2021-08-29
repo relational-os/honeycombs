@@ -48,36 +48,38 @@ const EditBlock = (props: EditBlockView) => {
           value={context}
           onChange={(e) => setContext(e.target.value)}
         ></textarea>
-        {blockType == "text" ? (
-          <textarea
-            className="content"
-            placeholder="what are you thinking?"
-            value={content as string}
-            onChange={(e) => setContent(e.target.value)}
-          ></textarea>
-        ) : (
-          <div className="upload-dropzone" {...getRootProps()}>
-            <input {...getInputProps()} />
+        <div className="body">
+          {blockType == "text" ? (
+            <textarea
+              className="content"
+              placeholder="what are you thinking?"
+              value={content as string}
+              onChange={(e) => setContent(e.target.value)}
+            ></textarea>
+          ) : (
+            <>
+              {images ? (
+                images.map((img, idx) => {
+                  return (
+                    <span key={idx}>
+                      <img src={img.preview} alt="test"></img>
+                    </span>
+                  );
+                })
+              ) : (
+                <div className="upload-dropzone" {...getRootProps()}>
+                  <input {...getInputProps()} />
 
-            {images ? (
-              images.map((img, idx) => {
-                return (
-                  <span key={idx}>
-                    <img src={img.preview} alt="test"></img>
-                  </span>
-                );
-              })
-            ) : (
-              <>
-                {isDragActive ? (
-                  <span>☁️ Drop the image here</span>
-                ) : (
-                  <span>☁️ Feed me an image ⬆️</span>
-                )}
-              </>
-            )}
-          </div>
-        )}
+                  {isDragActive ? (
+                    <span>☁️ Drop the image here</span>
+                  ) : (
+                    <span>☁️ Feed me an image ⬆️</span>
+                  )}
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
 
       <div className="button-bar">
@@ -127,6 +129,13 @@ const EditBlock = (props: EditBlockView) => {
           height: 8rem;
         }
 
+        div.body {
+        }
+
+        div.body img {
+          width: 100%;
+        }
+
         .upload-dropzone span {
           display: block;
           margin-bottom: 0.5rem;
@@ -134,6 +143,11 @@ const EditBlock = (props: EditBlockView) => {
           border: 1px dashed lightblue;
           border-radius: 6px;
           text-align: center;
+        }
+
+        .upload-dropzone:hover span {
+          background-color: #add8e63e;
+          cursor: pointer;
         }
 
         .button-bar {
