@@ -194,6 +194,7 @@ const Block = (view: BlockView) => {
           background: #fff;
           box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
           border: none;
+          margin-bottom: 1rem;
         }
 
         .block.new {
