@@ -141,11 +141,13 @@ const Block = (view: BlockView) => {
             <p className="block-text">{view.block.content}</p>
           )}
           {view.block.type == "image" && (
-            <img
-              src={"https://ipfs.io/ipfs/" + view.block.content}
-              className="block-image"
-              alt="this blocks image"
-            />
+            <a href={"https://ipfs.io/ipfs/" + view.block.content}>
+              <img
+                src={"https://ipfs.io/ipfs/" + view.block.content}
+                className="block-image"
+                alt="this blocks image"
+              />
+            </a>
           )}
         </div>
       )}

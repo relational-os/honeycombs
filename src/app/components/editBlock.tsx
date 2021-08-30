@@ -62,7 +62,7 @@ const EditBlock = (props: EditBlockView) => {
                 images.map((img, idx) => {
                   return (
                     <span key={idx}>
-                      <img src={img.preview} alt="test"></img>
+                      <img src={img.preview} alt="an image preview"></img>
                     </span>
                   );
                 })
