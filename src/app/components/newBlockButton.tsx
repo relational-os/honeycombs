@@ -1,6 +1,7 @@
 import { useBlockStore } from "@app/features/state";
-import { useWallet } from "@gimmixfactory/use-wallet";
+import { useWallet } from "@gimmixorg/use-wallet";
 import React from "react";
+import { v4 as uuid } from "uuid";
 import { BlockView } from "./block";
 
 const NewBlockButton = () => {
@@ -9,6 +10,7 @@ const NewBlockButton = () => {
 
   const createNewBlock = (type: string) => {
     var block: BlockView = {
+      uuid: uuid(),
       block: {
         author: account,
         type: type,
@@ -16,10 +18,7 @@ const NewBlockButton = () => {
       editing: true,
     };
 
-    // console.log("prepending", block);
-
     prependBlock([block]);
-    // clear();
   };
 
   return (

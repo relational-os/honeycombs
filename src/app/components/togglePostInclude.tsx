@@ -9,8 +9,6 @@ interface TogglePostIncludeView {
 const TogglePostInclude = (view: TogglePostIncludeView) => {
   const [checked, setChecked] = useState(false);
 
-  console.log(checked);
-
   return (
     <div className="togglepostinclude">
       <input

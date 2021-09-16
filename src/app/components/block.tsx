@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TimeAgo from "timeago-react";
 import Image from "next/image";
-// import { useWallet } from "@gimmixfactory/use-wallet";
 
 import { OSBlock, RelationalOS } from "@relational-os/block-bridge";
+
+import { useBlockStore } from "@app/features/state";
 
 import EditBlock from "./editBlock";
 import EditHistory from "./editHistory";
 import TogglePostInclude from "./togglePostInclude";
 import Avatar from "./avatar";
-import { useWallet } from "@gimmixfactory/use-wallet";
-// import { ENSName } from "react-ens-name";
+import { useWallet } from "@gimmixorg/use-wallet";
+import { ENSName } from "react-ens-name";
 
 export interface BlockView {
+  uuid: string;
   editing?: boolean;
   collapsed?: boolean;
   ipfsComplete?: boolean;
@@ -29,38 +31,42 @@ export interface EditBlockView extends BlockView {
 const Block = (view: BlockView) => {
   const { provider } = useWallet();
 
-  const [block, setBlock] = useState(view.block);
+  const updateBlock = useBlockStore.getState().updateBlock;
+  const removeBlock = useBlockStore.getState().removeBlock;
+
   const [editing, setEditing] = useState(view.editing);
   const [collapsed, setCollapsed] = useState(view.collapsed);
-
-  const [ipfsComplete, setIPFSComplete] = useState(view.ipfsComplete);
-  const [txComplete, setTxComplete] = useState(view.txComplete);
-  const [txConfirmed, setTxConfirmed] = useState(view.txConfirmed);
 
   const toggleEditing = () => setEditing(!editing);
   const toggleCollapsed = () => setCollapsed(!collapsed);
 
-  const handleEditSaveClick = async (block: OSBlock) => {
-    console.log("saved", block);
+  const handleEditCancelClick = () => {
+    // remove the block from the view if the user has not saved it in any capacity
+    view.ipfsComplete ? removeBlock(view) : toggleEditing();
+  };
 
+  const handleEditSaveClick = async (block: OSBlock) => {
     if (!provider) throw new Error("NO PROVIDER BUT SAVING A BLOCK");
     const os = new RelationalOS(provider);
     const tx = await os.newBlock(block, {
       IPFSUploadComplete: (hash: string) => {
-        setIPFSComplete(true);
-        setBlock(block);
         toggleEditing();
+        updateBlock({
+          ...view,
+          ipfsComplete: true,
+          block: block,
+        });
 
         console.log(`IPFS HASH: ${hash}`);
       },
     });
 
     console.log("transaction submitted", tx);
-    setTxComplete(true);
+    updateBlock({ ...view, txComplete: true });
 
     const receipt = await tx.wait(2);
     console.log("transaction confirmed");
-    setTxConfirmed(true);
+    updateBlock({ ...view, txConfirmed: true });
 
     console.log(receipt);
     console.log(
@@ -70,16 +76,6 @@ const Block = (view: BlockView) => {
       }`
     );
   };
-  const handleEditCancelClick = () => toggleEditing();
-
-  useEffect(() => {
-    setBlock(view.block);
-    setEditing(view.editing);
-    setCollapsed(view.collapsed);
-    setIPFSComplete(view.ipfsComplete);
-    setTxComplete(view.txComplete);
-    setTxConfirmed(view.txConfirmed);
-  }, [view]);
 
   return (
     <div className={editing ? "editing block" : "block"}>
@@ -88,8 +84,7 @@ const Block = (view: BlockView) => {
         <Avatar />
         <div className="header-metadata">
           <div className="author">
-            {/* <ENSName address={view.block.author}></ENSName> */}
-            {view.block.author}
+            <ENSName address={view.block.author}></ENSName>
           </div>
           <div>
             posted{" "}
@@ -141,16 +136,18 @@ const Block = (view: BlockView) => {
         ></EditBlock>
       ) : (
         <div className="block-body">
-          <div className="block-context">{block.context}</div>
-          {block.type == "text" && (
-            <p className="block-text">{block.content}</p>
+          <div className="block-context">{view.block.context}</div>
+          {view.block.type == "text" && (
+            <p className="block-text">{view.block.content}</p>
           )}
-          {block.type == "image" && (
-            <img
-              src={"https://ipfs.io/ipfs/" + block.content}
-              className="block-image"
-              alt="this blocks image"
-            />
+          {view.block.type == "image" && (
+            <a href={"https://ipfs.io/ipfs/" + view.block.content}>
+              <img
+                src={"https://ipfs.io/ipfs/" + view.block.content}
+                className="block-image"
+                alt="this blocks image"
+              />
+            </a>
           )}
         </div>
       )}
@@ -159,17 +156,17 @@ const Block = (view: BlockView) => {
       {collapsed && !editing && (
         <>
           <div>
-            {ipfsComplete ? (
+            {view.ipfsComplete ? (
               <span>IPFS</span>
             ) : (
               <span className="incomplete">incomplete ipfs</span>
             )}
-            {txComplete ? (
+            {view.txComplete ? (
               <span>tx received</span>
             ) : (
               <span className="incomplete">tx not here yet</span>
             )}
-            {txConfirmed ? (
+            {view.txConfirmed ? (
               <span>tx confirmed</span>
             ) : (
               <span className="incomplete">tx not confirmed yet</span>
@@ -199,6 +196,7 @@ const Block = (view: BlockView) => {
           background: #fff;
           box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
           border: none;
+          margin-bottom: 1rem;
         }
 
         .block.new {
@@ -305,4 +303,4 @@ const Block = (view: BlockView) => {
   );
 };
 
-export default Block;
+export default React.memo(Block);
